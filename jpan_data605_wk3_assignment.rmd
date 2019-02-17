@@ -1,0 +1,213 @@
+---
+title: "DATA 605 WK 3 Assignment"
+author: "Jun Pan"
+date: "February 17, 2019"
+output: html_document
+---
+
+```{r}
+require("pracma")
+```
+
+
+Problem 1.
+(1)What is the rank of the matrix A? 
+```{r}
+A <- matrix(c(1,2,3,4,-1,0,1,3,0,1,-2,1,5,4,-2,-3), nrow=4, byrow=TRUE)
+A
+```
+```{r}
+#Change a Matrix Into its Echelon Form
+rref(A)
+```
+The maximum number of linearly independent vectors in a matrix is equal to the number of non-zero rows in its row echelon matrix. Therefore, to find the rank of a matrix, we simply transform the matrix to its row echelon form and count the number of non-zero rows.
+
+There are 4 pivot rows, so the rank of $A$ is 4. 
+```{r}
+Rank(A)
+```
+double check by r programing which shows Rank=4.
+
+reference:
+        https://stattrek.com/matrix-algebra/echelon-transform.aspx#MatrixA
+        https://stattrek.com/matrix-algebra/matrix-rank.aspx
+
+(2)Given an mxn matrix where m > n, what can be the maximum rank? The minimum rank, assuming that the matrix is non-zero? 
+
+Anwser: maximum rank is n, minum rank is 1.
+
+reference: https://stattrek.com/matrix-algebra/matrix-rank.aspx
+
+(3) What is the rank of matrix B? 
+```{r}
+B <- matrix(c(1,2,1,3,6,3,2,4,2), nrow=3, byrow=TRUE)
+B
+```
+```{r}
+#change matrix B into echelon form
+rref(B)
+```
+Accordint to the echelon form of matrix B, we conclude the rank of B is 1.
+
+```{r}
+#Double check with R programming
+Rank(B)
+```
+
+Problem 2
+Compute the eigenvalues and eigenvectors of the matrix A. You'll need to show your work. You'll need to write out the characteristic polynomial and show your solution
+```{r}
+A <- matrix(c(1,2,3,0,4,5,0,0,6), nrow=3, byrow=TRUE)
+A
+```
+
+Because $A$ is a "upper triangular matrix"", its eigenvalues are values on the diagonal, so $\lambda_1=1$, $\lambda_2=4$ and $\lambda_3=6$.
+
+reference:http://mathonline.wikidot.com/determining-eigenvalues-from-upper-triangular-matrices-of-li
+          https://math.stackexchange.com/questions/1971598/eigenvectors-of-a-triangular-matrix
+          
+          
+```{r}
+# Double-check eigenvalues in R programming
+eigen(A)$values
+```         
+
+The "characteristic polynomial"" is 
+$p_A(\lambda) = (1-\lambda)(4-\lambda)(6-\lambda)$ or
+$p_A(\lambda) = -\lambda^3+11\lambda^2-34\lambda+24$.
+
+If $\lambda=1$, then $A - 1I_3$ is row-reduced to  
+
+
+```{r}
+rref(A - 1 * diag(3))
+```
+ 
+$$
+ \begin{bmatrix}
+ 0 &1 &0\\
+ 0 &0 &1\\
+ 0&0&0
+ \end{bmatrix}
+ \begin{bmatrix}
+ v_1\\
+ v_2\\
+ v_3
+ \end{bmatrix}
+ =
+ \begin{bmatrix}
+ 0\\
+ 0\\
+ 0
+ \end{bmatrix}
+$$
+
+Then $v_1=v_1$ and $v_2=0$ and $v_3=0$. The "eigenspace" is            
+          
+$$
+ E_{\lambda=1}=
+ \Bigg\langle \Bigg\{
+ \begin{bmatrix}
+ 1\\
+ 0\\
+ 0
+ \end{bmatrix}
+ \Bigg\} \Bigg \rangle
+$$          
+If $\lambda=4$, then $A - 4I_3$ is row-reduced to 
+```{r}
+rref(A - 4 * diag(3))
+```          
+$$
+ \begin{bmatrix}
+ 1 &-\frac{2}{3} &0\\
+ 0 &0 &1\\
+ 0&0&0
+ \end{bmatrix}
+ \begin{bmatrix}
+ v_1\\
+ v_2\\
+ v_3
+ \end{bmatrix}
+ =
+ \begin{bmatrix}
+ 0\\
+ 0\\
+ 0
+ \end{bmatrix}
+$$          
+
+Then $v_1 - \frac{2}{3}v_2=0$ and $v_3=0$. 
+
+Or $v_1=v_1$ and $v_2=\frac{3}{2}v_1=1.5v_1$ and $v_3=0$. 
+
+The "eigenspace" is  
+
+$$
+ E_{\lambda=4}=
+ \Bigg\langle \Bigg\{
+ \begin{bmatrix}
+ 1\\
+ 1.5\\
+ 0
+ \end{bmatrix}
+ \Bigg\} \Bigg \rangle
+$$
+Finally, if $\lambda=6$, then $A - 6I_3$ is row-reduced to 
+
+```{r}
+rref(A - 6 * diag(3))
+```
+
+$$
+ \begin{bmatrix}
+ 1 &0 &-1.6\\
+ 0 &1 &-2.5\\
+ 0&0&0
+ \end{bmatrix}
+ \begin{bmatrix}
+ v_1\\
+ v_2\\
+ v_3
+ \end{bmatrix}
+ =
+ \begin{bmatrix}
+ 0\\
+ 0\\
+ 0
+ \end{bmatrix}
+$$
+
+Then $v_1-1.6v_3=0$ and $v_2-2.5v_3=0$. 
+
+Or $v_1=1.6v_3$ and $v_2=2.5v_3$ and $v_3=v_3$. 
+
+The "eigenspace" is  
+
+$$
+ E_{\lambda=6}=
+ \Bigg\langle \Bigg\{
+ \begin{bmatrix}
+ 1.6\\
+ 2.5\\
+ 1
+ \end{bmatrix}
+ \Bigg\} \Bigg \rangle
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+          
